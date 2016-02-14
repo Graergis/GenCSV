@@ -63,12 +63,12 @@ public class Generator {
             }
             case INTEGER: {
                 Random random = new Random();
-                result += random.nextInt((2001) + 1000);
+                result += random.nextInt(2000);
                 break;
             }
             case FLOAT: {
                 Random random = new Random();
-                result += random.nextFloat() * Math.round(1^10);
+                result += random.nextFloat() * Math.round(1 ^ 10);
                 break;
             }
         }

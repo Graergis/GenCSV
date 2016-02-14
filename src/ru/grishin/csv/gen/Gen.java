@@ -1,5 +1,7 @@
 package ru.grishin.csv.gen;
 
+import ru.grishin.csv.gen.exception.ParseException;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -8,11 +10,12 @@ public class Gen {
         try {
             ArgsParser parser = new ArgsParser();
             Args arguments = parser.parse(args);
-            FileOutputStream fos = new FileOutputStream(arguments.getOut());
-            byte[] b = new Generator(arguments.getCol(), arguments.getRow(), arguments.getLen()).generate();
-            fos.write(b);
-            fos.close();
-        } catch (ParseException e){
+            try (FileOutputStream fos = new FileOutputStream(arguments.getOut())) {
+                Generator generator = new Generator(arguments.getCol(), arguments.getRow(), arguments.getLen());
+                fos.write(generator.generate());
+                fos.close();
+            }
+        } catch (ParseException e) {
             System.out.println(e.getMessage());
         }
     }
